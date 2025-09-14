@@ -1,0 +1,193 @@
+/* ============ Base Reset ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --header-h: 72px;
+  --bg-1: #0d1b2a;
+  --bg-2: #1b2f4b;
+  --ink: #f5f5f5;
+  --muted: #a9b1bd;
+  --accent: #ff7f11;
+  --card: #112f4b;
+}
+.logo-img {height:50px; width:auto;}
+html, body { height: 100%; }
+body {
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg-1);
+  color: var(--ink);
+  overflow: hidden; /* prevent page scroll */
+}
+
+/* ============ Header / Nav ============ */
+.header{
+  height: var(--header-h);
+  position: fixed; inset: 0 0 auto 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 32px);
+  background: rgba(13,27,42,0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 1000;
+}
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-mark{
+  width:36px; height:36px; display:grid; place-items:center;
+  background: var(--accent); color:#0d1b2a; font-weight:800; border-radius:10px;
+  box-shadow: 0 6px 20px rgba(255,127,17,0.35);
+}
+.brand-text{ font-weight:700; letter-spacing:.3px; color:var(--ink); }
+
+.nav { display:flex; align-items:center; gap:10px; }
+.nav-link{
+  text-decoration:none; color:var(--ink);
+  padding:8px 12px; border-radius:8px; font-weight:600; font-size:.95rem;
+  transition: .25s ease;
+  white-space: nowrap;
+}
+.nav-link:hover{ background:rgba(255,255,255,0.08); }
+.nav-link.active{ background: var(--accent); color:#0d1b2a; }
+.btn-resume{
+  margin-left:6px; text-decoration:none; font-weight:700;
+  padding:8px 12px; border-radius:10px; border:2px solid var(--accent);
+  color:var(--accent);
+  transition:.25s ease;
+}
+.btn-resume:hover{ background:var(--accent); color:#0d1b2a; }
+
+/* ============ Stage / Sections ============ */
+#stage{
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+/* All sections are stacked and fill the viewport under the header */
+.section{
+  position: absolute;
+  top: var(--header-h);
+  left: 0; right: 0; bottom: 0;
+  display: none;          /* hidden by default */
+  overflow: auto;         /* in case a section needs its own scroll */
+  padding: clamp(16px, 4vw, 40px);
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+}
+.section.active{ display: block; }  /* only one visible */
+
+/* Content wrapper to center nicely */
+.content{
+  max-width: 1100px; margin: 0 auto; text-align: center;
+}
+h1,h2,h3{ color: var(--accent); margin-bottom: 12px; }
+p{ color: var(--ink); opacity:.9; }
+
+/* ============ Home (Hero) ============ */
+.hero{ display:grid; place-items:center; min-height: calc(100% - 40px); gap: 16px; }
+.hero h1{ font-size: clamp(28px, 3.5vw, 54px); font-weight:800; }
+.hero h1 span{
+  background: var(--accent); color:#0d1b2a; padding: 6px 12px; border-radius: 10px;
+}
+.hero p{ font-size: clamp(16px, 1.3vw, 20px); color: var(--muted); }
+.cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top: 8px; }
+
+.btn{
+  padding: 10px 16px; border-radius: 10px; border: 2px solid var(--accent);
+  font-weight: 700; cursor: pointer; text-decoration: none; transition: .25s ease;
+}
+.btn-primary{ background: transparent; color: var(--accent); }
+.btn-primary:hover{ background: var(--accent); color:#0d1b2a; }
+.btn-secondary{ background: var(--accent); color:#0d1b2a; }
+.btn-secondary:hover{ filter: brightness(0.95); }
+
+/* Animated “orbs” background on Home */
+.decor{ position:absolute; inset:0; overflow:hidden; z-index:0; }
+.orb{
+  position:absolute; width:280px; height:280px; border-radius:50%;
+  filter: blur(60px);
+  opacity:.45; transform: translate(-50%, -50%);
+  animation: float 12s ease-in-out infinite;
+}
+.o1{ top: 22%; left: 18%; background: radial-gradient(circle at 30% 30%, #ff7f11, #dd5f00); }
+.o2{ top: 70%; left: 28%; background: radial-gradient(circle at 30% 30%, #ffbd59, #ff7f11); animation-delay: -4s; }
+.o3{ top: 45%; left: 80%; background: radial-gradient(circle at 30% 30%, #ff7f11, #ffbd59); animation-delay: -8s; }
+@keyframes float {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50%     { transform: translate(-50%, -50%) scale(1.08); }
+}
+/* bring hero content above decor */
+#home .content{ position:relative; z-index:1; }
+
+/* ============ Reusable UI ============ */
+.chip-grid{
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px; margin-top: 16px; list-style:none; padding:0; align-items: center;
+}
+.chip{
+  background: var(--card); padding: 14px; border-radius: 12px; font-weight:700;
+  text-align:center; transition:.25s ease;
+}
+.chip:hover{ background: var(--accent); color:#0d1b2a; }
+
+.card-grid{
+  display:flex; 
+  gap: 16px; margin-top: 12px;
+}
+.card{
+  background: var(--card); padding: 18px; border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition:.25s ease;
+}
+.card:hover{ transform: translateY(-4px); background: #12375a; }
+
+.timeline{ display:grid; gap: 16px; margin-top: 10px; }
+.timeline-item{
+  background: var(--card); padding: 18px; border-radius: 14px;
+  border-left: 4px solid var(--accent);
+}
+
+.list{ list-style: disc inside; display:grid; gap:8px; }
+
+.media-grid{
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px; margin-top: 12px;
+}
+.media-grid img{
+  width: 100%; display:block; border-radius: 12px; object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition:.25s ease;
+}
+.media-grid img:hover{ transform: scale(1.02); }
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* 2 per row on desktop */
+  gap: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.cert-item {
+  text-align: center;
+  max-width: 380px;
+}
+
+.cert-item img {
+  width: 100%;
+  max-width: 380px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.cert-item img:hover {
+  transform: scale(1.03);
+}
+
+.cert-item p {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(38, 126, 58);
+}
+
